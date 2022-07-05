@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+
+.tenz-list {
+  display: grid;
+  gap: 10px;
+  grid-template: auto auto / repeat(5, 1fr);
+  margin-left: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tenz-item {
+  border: 1px solid black;
+  width: 20px;
+  height: 20px;
+}
+
+.tenz-item.active {
+  background-color: green;
+}
+
+.start-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
