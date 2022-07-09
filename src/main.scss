@@ -1,0 +1,12 @@
+$body-color: red;
+
+body {
+  color: $body-color;
+  display: flex;
+}
+
+*,
+*:after,
+*::before{
+    box-sizing: border-box;
+}
