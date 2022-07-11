@@ -1,0 +1,20 @@
+button {
+    background-color: transparent;
+}
+
+button.selected {
+    background-color: #D6DBF5;
+}
+
+button.selected.correct,
+button.answer {
+    background-color: #94D7A2 !important;
+}
+
+button.selected.incorrect {
+    background-color: #F8BCBC;
+}
+
+.check-btn {
+    margin-top: 20px;
+}
