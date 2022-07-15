@@ -95,3 +95,4 @@ typings/
 index.d.ts
 .awcache
 dist
+package-lock.json

@@ -1,0 +1,57 @@
+.header {
+    padding: 20px $content-spacing;
+    position: relative;
+    min-height: 396px;
+    margin-bottom: 10px;
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    &__background {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+
+    &__logo {
+        text-decoration: none;
+
+        .logo-text {
+            @include text-l;
+            font-weight: 300;
+            color: $red;
+        }
+    }
+
+    &__add-btn {
+        background-color: rgba($gray-dark, 0.68);
+    }
+
+    &__search {
+        padding: 0 60px;
+
+        .title {
+            font-weight: 300;
+            font-size: 40px;
+            line-height: 48px;
+            margin-bottom: 38px;
+        }
+
+        .input {
+            background: rgba(50, 50, 50, 0.8);
+            flex-grow: 1;
+        }
+    }
+
+    &__search-field {
+        display: flex;
+        
+    }
+}

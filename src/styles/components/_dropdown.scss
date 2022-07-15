@@ -1,0 +1,78 @@
+@import '../variables';
+@import '../mixins';
+
+.dropdown {
+    position: relative;
+    width: fit-content;
+
+    &.open {
+        .dropdown {
+            &__arrow {
+                transform: rotate(180deg);
+            }
+
+            &__menu {
+                max-height: fit-content;
+                border-color: $gray;
+                background-color: $black;
+            }
+        }
+    }
+
+    &__btn.button {
+        @include text-m;
+        background-color: transparent;
+        color: $white;
+        padding-right: 0;
+        padding-left: 16px;
+        display: flex;
+        align-items: center;
+    }
+
+    &__menu {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        min-width: 100%;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .3s;
+
+        &.right {
+            right: 0;
+            left: auto;
+        }
+    }
+
+    li {
+        display: block;
+
+        &:first-child {
+            padding-top: 12px;
+        }
+
+        &:last-child{
+            padding-bottom: 6px;
+        }
+    }
+
+    &__item {
+        @include text-l;
+        display: block;
+        padding-top: 9px;
+        padding-bottom: 9px;
+        padding: 9px 30px 9px 23px;
+
+        &:hover {
+            background-color: $red;
+        }
+    }
+
+    &__arrow {
+        fill: $red;
+        display: inline-block;
+        margin-left: 13px;
+    }
+}

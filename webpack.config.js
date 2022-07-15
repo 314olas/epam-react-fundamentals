@@ -20,15 +20,15 @@ module.exports = {
             template: './src/index.html'
         }),
         new CaseSensitivePathsPlugin(),
-        new webpack.DefinePlugin({
+        new CheckerPlugin(),
+        new webpack.EnvironmentPlugin({
             PRODUCTION: JSON.stringify(true),
             VERSION: JSON.stringify('5fa3b9'),
             BROWSER_SUPPORTS_HTML5: true,
             TWO: '1+1',
             'typeof window': JSON.stringify('object'),
-            'process.env.NODE_ENVir': JSON.stringify(process.env.NODE_ENV),
-          }),
-          new CheckerPlugin()
+
+          })
     ],
     module: {
         rules: [

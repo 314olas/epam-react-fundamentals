@@ -1,14 +1,31 @@
-import React from "react"
-import Component from "./Component"
-import img from '../images/noimagelarge.png'
+import React, {useState} from "react"
+import {Header} from "./Header"
+import { Footer } from './Footer';
+import { Categories } from "./CategorIes";
+import { Sort } from "./Sort";
+import { MovieCards } from "./MovieCards";
+import { ErrorBoundary } from "./ErrorBoundary";
 
-export default function App() {
+export const App = () => {
+    const [categories, setCategories] = useState<string[]>(['all', 'Documentary', 'Comedy', 'Horror', 'crime'])
 
     return (
-        <div>
-            <h1>App </h1>
-            <img src={img} alt="" />
-            <Component />
-        </div>
+        <>
+            <Header/>
+            <main className="content">
+                <div className="filter">
+                    <Categories list={categories} />
+                    <Sort />
+                </div>
+                <ErrorBoundary>
+                    <MovieCards />
+                </ErrorBoundary>
+            </main>
+            <Footer>
+                <a href="/" className="header__logo">
+                    <h1 className="logo-text"><strong>netflix</strong>roulette</h1>
+                </a>
+            </Footer>
+        </>
     )
 }

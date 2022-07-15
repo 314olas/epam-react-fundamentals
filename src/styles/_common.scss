@@ -1,0 +1,46 @@
+.button {
+    @include text-l;
+    display: inline-block;
+    background-color: $gray;
+    color: $red;
+    border: none;
+    border-radius: 4px;
+    text-transform: uppercase;
+    padding: 16px 46px;
+    cursor: pointer;
+
+    &-warning {
+        background-color: $red;
+        color: $white;
+    }
+
+    &-outline {
+        background-color: transparent;
+        border: 1px solid $red;
+    }
+}
+
+.input {
+    @include text-l;
+    font-weight: 400;
+    padding: 16px 18px;
+    color: $white;
+    border: 0;
+    border-radius: 4px;
+
+    ::placeholder {
+        color: rgba($white, .3);
+    }
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 54px;
+
+    &--3 {
+        > * {
+            width: calc( (100% / 3) - 54px);
+        }
+    }
+}

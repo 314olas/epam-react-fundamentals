@@ -1,0 +1,19 @@
+@mixin text-l {
+    font-size: 20px;
+    line-height: 24px;
+}
+
+@mixin text-md {
+    font-size: 18px;
+    line-height: 22px;
+}
+
+@mixin text-m {
+    font-size: 16px;
+    line-height: 19px;
+}
+
+@mixin text-s {
+    font-size: 14px;
+    line-height: 17px;
+}
