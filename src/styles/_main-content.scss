@@ -81,10 +81,6 @@
         align-items: flex-start;
         justify-content: space-between;
 
-        .content {
-            
-        }
-
         .year-label {
             @include text-s;
             opacity: .7;
@@ -103,5 +99,14 @@
     .movie-category {
         @include text-s;
         opacity: .5;
+    }
+}
+
+.add-movie-form {
+
+    .button_wrapper {
+        display: flex;
+        justify-content: flex-end;
+        column-gap: 13px;
     }
 }

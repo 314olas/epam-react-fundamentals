@@ -18,18 +18,10 @@
         background-color: transparent;
         border: 1px solid $red;
     }
-}
 
-.input {
-    @include text-l;
-    font-weight: 400;
-    padding: 16px 18px;
-    color: $white;
-    border: 0;
-    border-radius: 4px;
-
-    ::placeholder {
-        color: rgba($white, .3);
+    &:disabled {
+        opacity: .5;
+        cursor: no-drop;
     }
 }
 
@@ -43,4 +35,18 @@
             width: calc( (100% / 3) - 54px);
         }
     }
+}
+
+.ok-icon {
+    display: inline-flex;
+    border-radius: 50%;
+    background-color: $red;
+    width: 66px;
+    height: 66px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-black {
+    background-color: $black;
 }

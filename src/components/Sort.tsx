@@ -1,21 +1,23 @@
 import React, { useState } from "react"
-import { DropDown } from "./Dropdown"
+import { IDropdownData } from "../types"
+import DropDown from "./Dropdown"
+import { ToggleSortedArray, toggleSortedArray } from "./Globaltate"
 
 interface Props {
+    sortedArray: IDropdownData[],
+    setSortValue: (value: ToggleSortedArray) => void
 }
 
 
-export const Sort: React.FC<Props> = () =>  {
-    const [sortedArray, setSortedArray] = useState<string[]>(['one','two'])
-    const [sortValue, setSortValue] = useState<string>(sortedArray[0])
+export const Sort: React.FC<Props> = ({sortedArray, setSortValue}) =>  {
+
 
     return (
         <div className="filter__sort">
             <span className="text">Sort by</span>
             <DropDown 
                 items={sortedArray}
-                defaultValue={sortValue}
-                onChange={(value) => setSortValue(value)}
+                onChangeHandler={(value) => setSortValue(toggleSortedArray(value))}
                 />
         </div>
     )

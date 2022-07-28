@@ -1,3 +1,8 @@
+@mixin text-xl {
+    font-size: 48px;
+    line-height: 40px;
+}
+
 @mixin text-l {
     font-size: 20px;
     line-height: 24px;

@@ -1,11 +1,11 @@
 import React from "react"
 
-interface FooterProps {
+interface Props {
     children?: React.ReactElement<any, any>
 }
 
 
-export const Footer: React.FC<FooterProps> = ({children}) =>  {
+export const Footer: React.FC<Props> = ({children}) =>  {
 
     return (
         <footer className="footer">

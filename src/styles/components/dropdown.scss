@@ -6,6 +6,8 @@
     width: fit-content;
 
     &.open {
+        z-index: 10;
+
         .dropdown {
             &__arrow {
                 transform: rotate(180deg);

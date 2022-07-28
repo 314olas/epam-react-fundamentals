@@ -1,0 +1,29 @@
+@import '../variables';
+@import '../mixins';
+
+.aprooval-modal {
+    .modal__content {
+        max-width: 686px;
+        text-align: center;
+    }
+
+    .ok-icon {
+        margin-bottom: 31px;
+    }
+
+    .title {
+        @include text-xl;
+        font-weight: 300;
+        text-transform: uppercase;
+        margin-bottom: 29px;
+    }
+
+    .text {
+        @include text-l;
+    }
+
+    .confirmation-btn-wrapper {
+        margin-top: 52px;
+        text-align: right;
+    }
+}
