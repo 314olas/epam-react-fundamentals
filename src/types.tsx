@@ -21,24 +21,19 @@ export interface ICommonFormField {
     placeholder?: string,
     label?: string,
     name?: string,
-}
-
-export type IRating = ICommonFormField & {
-    step: number
-}
-
-export type IGenre = ICommonFormField & {
+    step?: number,
     multiply?: boolean,
-    data?: IDropdownData[]
+    data?: IDropdownData[] | null
 }
+
 
 export interface IAddMovieForm {
     name: ICommonFormField,
-    genre: IGenre,
+    genre: ICommonFormField,
     year: ICommonFormField,
     movieUrl: ICommonFormField,
     overview?: ICommonFormField,
-    rating: IRating,
+    rating: ICommonFormField,
     runtime: ICommonFormField,
 };
 

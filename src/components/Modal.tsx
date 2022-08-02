@@ -23,7 +23,6 @@ interface Props {
                         </div>
                         <div className="modal-backdrop" onClick={() => toggleOpen(false)}></div>
                     </div>
-                    
                 </>
             }
         </>

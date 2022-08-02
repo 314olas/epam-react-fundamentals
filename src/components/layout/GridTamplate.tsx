@@ -3,7 +3,7 @@ import "../../styles/components/grid-tamplate.scss"
 
 
 interface Props {
-    children: React.ReactElement[],
+    children: React.ReactNode,
     columnCount?: number,
     additionalClasses?: string
 }

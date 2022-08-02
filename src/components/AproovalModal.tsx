@@ -1,11 +1,11 @@
 import React from "react"
-import { GlobalContextInterface, ToggleAproovalModal, toggleAproovalModal } from "./Globaltate"
+import { IGlobalContextInterface, ToggleAproovalModal, toggleAproovalModal } from "./Globaltate"
 import Modal from "./Modal"
 import '../styles/components/aprooval-modal.scss'
 
 interface Props {
     children: React.ReactElement
-    state: GlobalContextInterface,
+    state: IGlobalContextInterface,
     toggleOpen: React.Dispatch<ToggleAproovalModal>
 }
 

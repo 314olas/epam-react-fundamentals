@@ -1,8 +1,8 @@
 import React from "react"
-import img from '../../images/noimagelarge.png'
 import DropDown from "../Dropdown"
 import { IDropdownData, Movie, MovieActionEnum } from "../../types"
 import { Actions, selectMovie } from "../Globaltate"
+import MovieCardImg from "./MovieCardImg"
 
 interface Props {
     movies: Movie[],
@@ -24,7 +24,7 @@ export const MovieCard: React.FC<Props> = ({movies, actions, selectMovieHandler,
                     <article className="movie-card" key={movie.id.toString()}>
                         <div className="image-wrapper">
                             <a href="#" title={movie.name} onClick={(e) => clickHandler(e, movie)}>
-                                <img src={movie.imgUrl || img} alt="" />
+                                <MovieCardImg imgUrl={movie.imgUrl} />
                             </a>
                             <DropDown
                                 className={'movie-card__more'}
@@ -49,3 +49,14 @@ export const MovieCard: React.FC<Props> = ({movies, actions, selectMovieHandler,
         </>
     )
 }
+
+const a = {
+    name: 'dsf',
+    roar(){
+        console.log(this.name)
+    }
+}
+
+a.name = 'asdf'
+const b = a
+b.roar()

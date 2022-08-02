@@ -8,9 +8,7 @@ interface Props {
     setSortValue: (value: ToggleSortedArray) => void
 }
 
-
 export const Sort: React.FC<Props> = ({sortedArray, setSortValue}) =>  {
-
 
     return (
         <div className="filter__sort">

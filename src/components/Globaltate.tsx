@@ -117,7 +117,7 @@ const editFormCreate = (movie: Movie): IAddMovieForm => {
 }
 
 
-export interface GlobalContextInterface {
+export interface IGlobalContextInterface {
     genre: IDropdownData[],
     formFields: IAddMovieForm,
     formValidation: boolean,
@@ -130,10 +130,10 @@ export interface GlobalContextInterface {
         position: Direction
     },
     movieActions: IDropdownData[],
-    movieModal: boolean
+    isMovieModal: boolean
 }
 
-export const initialState: GlobalContextInterface = {
+export const initialState: IGlobalContextInterface = {
     genre: [{name: 'default', isActive: true}],
     formFields: Object.assign({}, initialFormValue),
     formValidation: false,
@@ -155,7 +155,7 @@ export const initialState: GlobalContextInterface = {
         position: Direction.Top
     },
     movieActions,
-    movieModal: false
+    isMovieModal: false
 }
 
 export const TOOGLE_GENRE = 'TOOGLE_GENRE'
@@ -169,6 +169,7 @@ export const APDATE_FORM_FIELD = 'APDATE_FORM_FIELD'
 export const UPDATE_FORM_VALIDATION = 'UPDATE_FORM_VALIDATION'
 export const RESET_FORM_FIELDS = 'RESET_FORM_FIELDS'
 export const TOGGLE_APROOVAL_MODAL = 'TOGGLE_APROOVAL_MODAL'
+export const TOGGLE_MOVIE_MODAL = 'TOGGLE_MOVIE_MODAL'
 
 export interface ToggleGenreInterface {
     type: typeof TOOGLE_GENRE,
@@ -300,6 +301,18 @@ export function toggleAproovalModal(state: boolean): ToggleAproovalModal {
     }
 }
 
+export interface ToggleMovieModal {
+    type: typeof TOGGLE_MOVIE_MODAL,
+    payload: boolean
+}
+
+export function toggleMovieModal(state: boolean): ToggleMovieModal {
+    return {
+        type: TOGGLE_MOVIE_MODAL,
+        payload: state
+    }
+}
+
 export type Actions = ToggleGenreInterface
                 | AddMovie
                 | AddMovies
@@ -311,8 +324,9 @@ export type Actions = ToggleGenreInterface
                 | AddGenreInterface
                 | ToggleAproovalModal
                 | ActionMovie
+                | ToggleMovieModal
 
-export function globalReducer(state: GlobalContextInterface, action: Actions): GlobalContextInterface {
+export function globalReducer(state: IGlobalContextInterface, action: Actions): IGlobalContextInterface {
     switch (action.type) {
         case TOOGLE_GENRE:
             const newGenreArray: IDropdownData[] = state.genre.map((genre) => returnNewMappedDropdownArray(genre, action.payload))
@@ -352,6 +366,8 @@ export function globalReducer(state: GlobalContextInterface, action: Actions): G
             return St
         case TOGGLE_APROOVAL_MODAL:
             return {...state, aprooveMoadal: {...state.aprooveMoadal, isOpen: action.payload}}
+        case TOGGLE_MOVIE_MODAL:
+            return {...state, isMovieModal: action.payload}
         default:
             return state
       }

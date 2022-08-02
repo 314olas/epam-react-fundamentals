@@ -1,9 +1,9 @@
 import React, { createContext } from "react";
-import { Actions, GlobalContextInterface, initialState } from '../Globaltate';
+import { Actions, IGlobalContextInterface, initialState } from '../Globaltate';
 import useApp from "../hooks/app";
 
 export interface IAppContext {
-    state: GlobalContextInterface,
+    state: IGlobalContextInterface,
     dispatch?: React.Dispatch<Actions>
 }
 

@@ -1,5 +1,5 @@
 import { IAddMovieForm } from "../../types";
-import { GlobalContextInterface } from "../Globaltate";
+import { IGlobalContextInterface } from "../Globaltate";
 
 export const debounce = (fn: Function, ms = 300) => {
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -9,7 +9,7 @@ export const debounce = (fn: Function, ms = 300) => {
     };
 };
 
-export const validateForm = (state: GlobalContextInterface): boolean => {
+export const validateForm = (state: IGlobalContextInterface): boolean => {
     let isValidFields = true
     let keys = Object.keys(state.formFields) as Array<keyof IAddMovieForm>
     keys.forEach((key) => {

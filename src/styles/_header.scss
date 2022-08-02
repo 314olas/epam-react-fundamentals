@@ -52,6 +52,10 @@
 
     &__search-field {
         display: flex;
-        
+    }
+
+    &__search-btn {
+        background-color: transparent;
+        padding: 5px;
     }
 }
