@@ -1,5 +1,4 @@
-import { IAddMovieForm } from "../../types";
-import { IGlobalContextInterface } from "../Globaltate";
+import { IAddMovieForm, IGlobalContextInterface } from "../types";
 
 export const debounce = (fn: Function, ms = 300) => {
     let timeoutId: ReturnType<typeof setTimeout>;

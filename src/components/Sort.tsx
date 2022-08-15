@@ -1,22 +1,23 @@
-import React, { useState } from "react"
-import { IDropdownData } from "../types"
+import React from "react"
+import { selectSortValue } from "../store/slices/movieSlices";
 import DropDown from "./Dropdown"
-import { ToggleSortedArray, toggleSortedArray } from "./Globaltate"
+import { useAppSelector, useAppDispatch } from './hooks/app';
 
 interface Props {
-    sortedArray: IDropdownData[],
-    setSortValue: (value: ToggleSortedArray) => void
 }
 
-export const Sort: React.FC<Props> = ({sortedArray, setSortValue}) =>  {
+export const Sort: React.FC<Props> = () => {
+    const sortedArray = useAppSelector((state) => state.movie.sortedArray)
+    const dispatch = useAppDispatch()
 
     return (
         <div className="filter__sort">
             <span className="text">Sort by</span>
-            <DropDown 
-                items={sortedArray}
-                onChangeHandler={(value) => setSortValue(toggleSortedArray(value))}
-                />
+            <DropDown
+                items={sortedArray.data}
+                value={sortedArray.value}
+                onChangeHandler={(value) => dispatch(selectSortValue(value))}
+            />
         </div>
     )
 }

@@ -1,31 +1,30 @@
 import React from "react"
-import { Movie } from "../../types"
-import '../../styles/components/movie-card-description.scss'
 import MovieCardImg from "./MovieCardImg"
+import { IMovie } from "../../types"
+import '../../styles/components/movie-card-description.scss'
 
 interface Props {
-    movie: Movie
+    movie: IMovie
 }
 
 const MovieCardDescription: React.FC<Props> = ({movie}) => {
     return (
         <div className="movie-card-description">
-            <MovieCardImg imgUrl={movie.imgUrl} />
+            <MovieCardImg imgUrl={movie.poster_path} />
             <div className="info">
                 <div className="title">
-                    <h2 className="title__text">{movie.name}</h2>
-                    <span className="rating">{movie.rating}</span>
+                    <h2 className="title__text">{movie.title}</h2>
+                    <span className="rating">{movie.vote_average}</span>
                 </div>
-                <p className="genre">{movie.genre.split(',').join('')}</p>
+                <p className="genre">{movie.genres.join(', ')}</p>
                 <div className="time">
-                    <span className="year">{movie.year}</span>
+                    <span className="year">{movie.release_date.split('-')[0]}</span>
                     <span>{movie.runtime}</span>
                 </div>
                 <span className="description">{movie.overview}</span>
             </div>
 
         </div>
-        
     )
 }
 

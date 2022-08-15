@@ -1,70 +1,102 @@
-import React, { useContext } from "react"
-import { IAddMovieForm, Movie } from "../../types"
-import {AppContext} from "../context/AppContext"
-import { addMovie, apdateFormField, resetFormFields, toggleAproovalModal, updateFormValidation, toggleMovieModal } from '../Globaltate';
+import React from "react"
+import { useCreateMovieMutation, useUpdateMovieMutation } from "../../services/movieService"
+import { toggleSuccessModal, toggleMovieFormModal } from "../../store/slices/modalsSlices";
+import { resetFormFeilds, updateFormField } from "../../store/slices/movieSlices"
+import { IAddMovieForm, IUpdateFormField, IMovie, IErrorResponse } from '../../types';
+import { useAppDispatch, useAppSelector } from "../hooks/app"
 import InputCompenent from "../InputComponent"
 import GridTamplate from "../layout/GridTamplate"
-import { validateForm } from "../utils/validateForm"
+import Loading from "../Loading";
+import Modal from "../Modal";
 
 interface Props {
+    movieId: number | undefined
 }
 
-const MovieForm: React.FC<Props> = () =>  {
-    const {state, dispatch} = useContext(AppContext)
+const MovieForm: React.FC<Props> = ({ movieId }) => {
+    const formFields = useAppSelector((state) => state.movie.formFields)
+    const movieFormModal = useAppSelector((state) => state.modals.movieFormModal)
+    const formValidation = useAppSelector((state) => state.movie.formValidation)
+    const [createcMovie] = useCreateMovieMutation()
+    const [updateMovie, { isLoading: isUpdateMovie }] = useUpdateMovieMutation()
+    const dispatch = useAppDispatch()
 
-    const onChangeHandler = (value: string | number, name?: keyof IAddMovieForm) => {
-        dispatch(apdateFormField({name: name, value: value}))
-        dispatch(updateFormValidation(validateForm(state)))
+    const onChangeHandler = (data: IUpdateFormField) => {
+        dispatch(updateFormField({ name: data.name, value: data.value }))
     }
 
     const resetHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        dispatch(resetFormFields())
+        dispatch(resetFormFeilds())
     }
 
-    const submitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        const newMovie: Movie = {
-            id: Date.now(),
-            name: state.formFields.name.value.toString(),
-            genre: state.formFields.genre.value.toString(),
-            imgUrl: '',
-            year: state.formFields.year.value.toString().split('-')[0],
-            movieUrl: state.formFields.movieUrl.value.toString(),
-            rating: state.formFields.rating.value,
-            runtime: state.formFields.runtime.value
+        e.stopPropagation()
+        const movie: IMovie = {
+            id: movieId as number,
+            title: formFields.title.value as string,
+            tagline: formFields.tagline.value as string,
+            vote_average: +formFields.vote_average.value,
+            vote_count: +formFields.vote_count.value,
+            release_date: formFields.release_date.value as string,
+            poster_path: formFields.poster_path.value as string,
+            overview: formFields.overview.value as string,
+            budget: +formFields.budget.value,
+            revenue: +formFields.revenue.value,
+            genres: formFields.genres.value as Array<string>,
+            runtime: +formFields.runtime.value,
         }
 
-        if (state.formFields.overview.value) newMovie.overview = state.formFields.overview.value.toString()
-        dispatch(toggleMovieModal(false))
-        dispatch(addMovie(newMovie))
-        dispatch(toggleAproovalModal(true))
-        dispatch(resetFormFields())
+        try {
+            const res: any = await updateMovie(movie)
+            console.log('res:', res)
+            
+            if (!res.error) {
+                dispatch(toggleMovieFormModal(false))
+                dispatch(toggleSuccessModal(true))
+            } else {
+                console.log('res.error:', res.error)
+            }
+
+        } catch (error) {
+            console.log('error:', error)
+        }
     }
 
     return (
         <>
-            <form className="add-movie-form">
-                <GridTamplate columnCount={2} additionalClasses={'form-field-grid'}>
-                {Object.keys(state.formFields).map((field: keyof IAddMovieForm) => {
-                    return <InputCompenent key={field}
-                                            value={state.formFields[field].value}
-                                            type={state.formFields[field].typeField || ''}
-                                            nameAttr={field}
-                                            label={state.formFields[field].label || ''}
-                                            placeholder={state.formFields[field].placeholder || ''}
-                                            step={state.formFields[field].step || 0}
-                                            data={state.formFields[field].data || null}
-                                            className={state.formFields[field].typeField === 'textarea' ? 'textarea' : ''}
-                                            multiply={state.formFields[field].multiply ? state.formFields[field].multiply : false}
-                                            onChange={onChangeHandler}/>
-                    })}
-                </GridTamplate>
-                <div className="button_wrapper">
-                    <button className="button" onClick={resetHandler}>reset</button>
-                    <button className="button button-outline" onClick={submitHandler} disabled={!state.formValidation}>submit</button>
-                </div>
-            </form>
+            <React.Suspense fallback={<Loading />}>
+                <Modal isOpen={movieFormModal} toggleOpen={state => dispatch(toggleMovieFormModal(state))}>
+
+                    {isUpdateMovie ?
+                        <Loading /> :
+                        <form className="add-movie-form">
+                            <GridTamplate columnCount={2} additionalClasses={'form-field-grid'}>
+                                {Object.keys(formFields).map((field: keyof IAddMovieForm) => {
+                                    return <InputCompenent key={field}
+                                        value={formFields[field].value}
+                                        type={formFields[field].typeField || ''}
+                                        nameAttr={field}
+                                        label={formFields[field].label || ''}
+                                        placeholder={formFields[field].placeholder || ''}
+                                        step={formFields[field].step || 0}
+                                        data={formFields[field].data || null}
+                                        className={formFields[field].typeField === 'textarea' ? 'textarea' : ''}
+                                        multiply={formFields[field].multiply ? formFields[field].multiply : false}
+                                        onChange={(value) => onChangeHandler({ name: field, value: value })} />
+                                })}
+                            </GridTamplate>
+                            <div className="button_wrapper">
+                                <button className="button" onClick={resetHandler}>reset</button>
+                                <button className="button button-outline" onClick={submitHandler} disabled={false}>submit</button>
+                            </div>
+                        </form>
+                    }
+
+                </Modal>
+            </React.Suspense>
+
         </>
     )
 }

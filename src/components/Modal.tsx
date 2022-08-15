@@ -10,7 +10,7 @@ interface Props {
     toggleOpen: (value: boolean) => void
 }
 
- const Modal = ({children, additionalClass, position, isOpen, toggleOpen}: Props): React.ReactElement =>  {
+const Modal = ({ children, additionalClass, position, isOpen, toggleOpen }: Props): React.ReactElement => {
 
     return (
         <>

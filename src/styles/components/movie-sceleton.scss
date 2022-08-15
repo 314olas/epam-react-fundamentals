@@ -1,0 +1,43 @@
+@import '../variables';
+@import '../mixins';
+
+.movie-card-skeleton {
+    .movie-name,
+    .image-wrapper,
+    .movie-category,
+    .year-label {
+        background-color: $gray;
+        border-radius: 8px;
+    }
+
+    .image-wrapper {
+        aspect-ratio: 2/3;
+
+    }
+
+    .movie-name {
+        width: 85%;
+    }
+
+    .movie-category {
+        width: 65%;
+        display: block;
+    }
+
+    .text-content {
+        width: 80%;
+        display: block;
+    }
+
+    .movie-card__footer .year-label {
+        width: 20%;
+        height: 25px;
+        border-radius: 8px;
+    }
+
+    .movie-name,
+    .movie-category {
+        height: 25px;
+    }
+}
+

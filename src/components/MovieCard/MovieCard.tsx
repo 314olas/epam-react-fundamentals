@@ -1,20 +1,20 @@
 import React from "react"
 import DropDown from "../Dropdown"
-import { IDropdownData, Movie, MovieActionEnum } from "../../types"
-import { Actions, selectMovie } from "../Globaltate"
+import { IDropdownData, IMovie, IToggleAction, MovieActionEnum } from "../../types"
 import MovieCardImg from "./MovieCardImg"
 
 interface Props {
-    movies: Movie[],
-    selectMovieHandler: React.Dispatch<Actions>,
-    movieAction: (action: {value: MovieActionEnum, id: number}) => void,
-    actions: IDropdownData[]
+    movies: IMovie[],
+    selectMovieHandler: (movie: IMovie) => void,
+    toggleMovieAction: (action: IToggleAction, movie: IMovie) => void,
+    actions: IDropdownData
 }
 
-export const MovieCard: React.FC<Props> = ({movies, actions, selectMovieHandler, movieAction}) =>  {
-    const clickHandler = (e: React.MouseEvent<HTMLAnchorElement>, movie: Movie) => {
+export const MovieCard: React.FC<Props> = ({movies, actions, toggleMovieAction, selectMovieHandler}) =>  {
+
+    const clickHandler = (e: React.MouseEvent<HTMLAnchorElement>, movie: IMovie) => {
         e.preventDefault();
-        selectMovieHandler(selectMovie(movie))
+        selectMovieHandler(movie)
     }
 
     return (
@@ -23,24 +23,25 @@ export const MovieCard: React.FC<Props> = ({movies, actions, selectMovieHandler,
                 return (
                     <article className="movie-card" key={movie.id.toString()}>
                         <div className="image-wrapper">
-                            <a href="#" title={movie.name} onClick={(e) => clickHandler(e, movie)}>
-                                <MovieCardImg imgUrl={movie.imgUrl} />
+                            <a href="#" title={movie.title} onClick={(e) => clickHandler(e, movie)}>
+                                <MovieCardImg imgUrl={movie.poster_path} />
                             </a>
                             <DropDown
                                 className={'movie-card__more'}
                                 position={'right'}
                                 items={actions}
-                                onChangeHandler={(value: MovieActionEnum) => movieAction({value: value, id: +movie.id})} >
+                                value={['']}
+                                onChangeHandler={(value: IDropdownData) => toggleMovieAction({value: value[0] as MovieActionEnum, id: movie.id}, movie)} >
                                     <span>...</span>
                                 </DropDown>
                         </div>
                         <footer className="movie-card__footer">
                             <div className="text-content">
-                                <h4 className="movie-name">{movie.name}</h4>
-                                <span className="movie-category">{movie.genre}</span>
+                                <h4 className="movie-name">{movie.title}</h4>
+                                <span className="movie-category">{movie.genres.join(', ')}</span>
                             </div>
                             <span className="year-label">
-                                {movie.year}
+                                {movie.release_date.split('-')[0]}
                             </span>
                         </footer>
                     </article>
@@ -49,14 +50,3 @@ export const MovieCard: React.FC<Props> = ({movies, actions, selectMovieHandler,
         </>
     )
 }
-
-const a = {
-    name: 'dsf',
-    roar(){
-        console.log(this.name)
-    }
-}
-
-a.name = 'asdf'
-const b = a
-b.roar()

@@ -1,14 +1,8 @@
 import React, { createContext } from "react";
-import { Actions, IGlobalContextInterface, initialState } from '../Globaltate';
-import useApp from "../hooks/app";
+import { IGlobalContextInterface } from "../../types";
 
-export interface IAppContext {
-    state: IGlobalContextInterface,
-    dispatch?: React.Dispatch<Actions>
-}
-
-export const AppContext = createContext<IAppContext>({
-    state: initialState
+export const AppContext = createContext({
+    
 })
 
 export interface Props {
@@ -17,10 +11,8 @@ export interface Props {
 
 const AppState: React.FC<Props> = ({children}) => {
 
-    const {state, dispatch} = useApp();
-
     return (
-        <AppContext.Provider value={{state, dispatch}}>
+        <AppContext.Provider value={{}}>
             {children}
         </AppContext.Provider>
     )

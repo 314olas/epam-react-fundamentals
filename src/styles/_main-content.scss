@@ -7,6 +7,7 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 2px solid $gray-dark;
+    margin-bottom: 26px;
 
     &__sort {
         display: flex;
@@ -52,6 +53,10 @@
 }
 
 .movie-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     .image-wrapper {
         position: relative;
     }

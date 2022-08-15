@@ -1,7 +1,5 @@
 const path = require('path')
-const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
-const { CheckerPlugin } = require('awesome-typescript-loader')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 
 module.exports = {
@@ -20,27 +18,13 @@ module.exports = {
             template: './src/index.html'
         }),
         new CaseSensitivePathsPlugin(),
-        new CheckerPlugin(),
-        new webpack.EnvironmentPlugin({
-            PRODUCTION: JSON.stringify(true),
-            VERSION: JSON.stringify('5fa3b9'),
-            BROWSER_SUPPORTS_HTML5: true,
-            TWO: '1+1',
-            'typeof window': JSON.stringify('object'),
-
-          })
     ],
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
+                use: 'ts-loader',
                 exclude: /node_modules/,
-                use: {
-                    loader: 'awesome-typescript-loader',
-                    options: {
-                        useCache: true,
-                    }
-                },
             },
             {
                 test: /\.s[ac]ss$/i,
@@ -66,7 +50,7 @@ module.exports = {
                         }
                     },
                     {
-                        loader: "sass-loader", 
+                        loader: "sass-loader",
                         options: {
                             sourceMap: true
                         }

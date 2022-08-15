@@ -23,6 +23,7 @@
         @include text-l;
         border: 1px solid $white;
         border-radius: 50%;
+        flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;

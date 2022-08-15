@@ -1,41 +1,66 @@
-export interface Movie {
-    id: number | typeof Date.now,
-    name: string,
-    genre: string,
-    imgUrl: string,
-    year: string,
-    movieUrl: string,
-    overview?: string,
-    rating: string,
-    runtime: string
+export type IObjectKey = {
+    [key: string]: any;
+  };
+
+export interface IMovie {
+    id: number,
+    title: string;
+    tagline: string;
+    vote_average: number;
+    vote_count: number;
+    release_date: string;
+    poster_path: string;
+    overview: string;
+    budget: number;
+    revenue: number;
+    genres: IDropdownData;
+    runtime: number;
 }
 
-export interface IDropdownData {
-    name: string,
-    isActive: boolean
+export interface MoviesResponse {
+    totalAmount: number;
+    data: IMovie[];
+    offset: number;
+    limit: number;
 }
+
+// export interface IDropdownData {
+//     name: string,
+//     isActive: boolean
+// }
+
+export type IDropdownData = string[]
 
 export interface ICommonFormField {
     typeField?: string,
-    value: string,
+    value: string | string[] | number | IDropdownData,
     placeholder?: string,
     label?: string,
     name?: string,
     step?: number,
     multiply?: boolean,
-    data?: IDropdownData[] | null
+    data?: IDropdownData | null
 }
 
 
 export interface IAddMovieForm {
-    name: ICommonFormField,
-    genre: ICommonFormField,
-    year: ICommonFormField,
-    movieUrl: ICommonFormField,
-    overview?: ICommonFormField,
-    rating: ICommonFormField,
+    title: ICommonFormField,
+    tagline: ICommonFormField,
+    budget: ICommonFormField,
+    genres: ICommonFormField,
+    release_date: ICommonFormField,
+    vote_count: ICommonFormField,
+    poster_path: ICommonFormField,
+    overview: ICommonFormField,
+    vote_average: ICommonFormField,
     runtime: ICommonFormField,
+    revenue: ICommonFormField;
 };
+
+export interface IUpdateFormField {
+    name: keyof IAddMovieForm,
+    value: string | string[] | number | IDropdownData,
+}
 
 export enum Direction {
     Top = "top",
@@ -48,4 +73,32 @@ export enum Direction {
 export enum MovieActionEnum {
     Delete = 'Delete',
     Edit = 'Edit'
+}
+
+export interface IGlobalContextInterface {
+    genre: IDropdownData,
+    formFields: IAddMovieForm,
+    formValidation: boolean,
+    movies: IMovie[],
+    selectedMovie: null | IMovie
+    sortedArray: IDropdownData,
+    aprooveMoadal: {
+        isOpen: boolean,
+        aditionalClass: string,
+        position: Direction
+    },
+    movieActions: IDropdownData,
+    isMovieModal: boolean
+}
+
+export interface IToggleAction {
+    value: MovieActionEnum,
+    id: number
+}
+
+export interface IErrorResponse {
+    error: {
+        data?: any,
+        message?: any
+    }
 }

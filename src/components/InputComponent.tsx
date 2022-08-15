@@ -5,21 +5,20 @@ import DropDown from "./Dropdown"
 
 interface Props {
     type?: React.HTMLInputTypeAttribute,
-    children?: React.ReactElement,
     className?: string,
     id?: string,
     label?: string,
     nameAttr: string,
     onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    onChange: (value: string | number | IDropdownData[], name?: string) => void,
+    onChange: (value: string | number | IDropdownData | string[], name?: string) => void,
     placeholder?: string,
-    value: string,
-    data?: IDropdownData[],
+    value: string | number | string[] | IDropdownData,
+    data?: IDropdownData,
     multiply?: boolean,
     step?: number
 }
 
- const InputCompenent = ({type, id, nameAttr, placeholder, className, value, label, data, step, multiply, children, onChange, onBlur}: Props): React.ReactElement =>  {
+const InputCompenent = ({ type, id, nameAttr, placeholder, className, value, label, data, step, multiply, onChange, onBlur }: Props): React.ReactElement => {
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         onChange(e.target.value, nameAttr)
@@ -27,7 +26,7 @@ interface Props {
 
     const classNames = ['input', type];
 
-    const inputAttr: Pick<Props, 'id' | 'className' | 'placeholder'  | 'step' | 'type' > & {name: string} = {
+    const inputAttr: Pick<Props, 'id' | 'className' | 'placeholder' | 'step' | 'type'> & { name: string } = {
         id: id ? id : nameAttr,
         name: nameAttr,
         className: classNames.join(' '),
@@ -58,14 +57,15 @@ interface Props {
             <div className="input-wrapper">
 
                 {type === 'textarea' &&
-                    <textarea  {...inputAttr} value={value} onChange={onChangeHandler}></textarea>
+                    <textarea  {...inputAttr} value={value as string} onChange={onChangeHandler}></textarea>
                 }
 
                 {type !== 'textarea' && type !== 'dropdown' &&
-                    <input {...inputAttr} value={value} onChange={onChangeHandler}/>
-            }
+                    <input {...inputAttr} value={value as string} onChange={onChangeHandler} />
+                }
+
                 {type === 'dropdown' &&
-                    <DropDown items={data} multiply={multiply}  name={nameAttr} onChangeHandler={(value) => onChange(value, nameAttr)}></DropDown>
+                    <DropDown items={data} value={value as IDropdownData} multiply={multiply} name={nameAttr} onChangeHandler={(value) => onChange(value, nameAttr)}></DropDown>
                 }
             </div>
         </div>
@@ -74,8 +74,7 @@ interface Props {
 
 InputCompenent.defaultProps = {
     label: "label",
-    dropdownArray: ['defaultValue'],
-    onBlur: () => {}
+    onBlur: () => { }
 }
 
 
