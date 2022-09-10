@@ -3,7 +3,7 @@ import { MovieCard } from "./MovieCard"
 import MovieForm from "./MovieForm";
 import Loading from "../Loading"
 import MoveSceleton from './MovieSceleton';
-import { editMovie, selectMovie } from "../../store/slices/movieSlices"
+import { editMovie, selectMovie, selectMovieActionsValue } from "../../store/slices/movieSlices"
 import { useDeleteMovieMutation, useGetMoviesQuery } from "../../services/movieService"
 import { useAppSelector, useAppDispatch } from '../hooks/app';
 import { Direction, MovieActionEnum, IMovie, IToggleAction } from '../../types';
@@ -39,9 +39,11 @@ export const MovieCards: React.FC<Props> = () => {
     const toggleMovieActionHandler = (action: IToggleAction, movie: IMovie) => {
         setMovieId(action.id)
 
+        dispatch(selectMovieActionsValue(action.value))
+
         if (action.value === MovieActionEnum.Delete) {
             dispatch(toggleDeleteConfirmationModal(true))
-        } else {
+        } else if (action.value === MovieActionEnum.Edit) {
             dispatch(toggleMovieFormModal(true))
             dispatch(editMovie(movie))
         }

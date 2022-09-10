@@ -1,9 +1,14 @@
 export type IObjectKey = {
     [key: string]: any;
-  };
+};
+
+export interface ISelectOption {
+    label: string;
+    value: string;
+}
 
 export interface IMovie {
-    id: number,
+    id?: number,
     title: string;
     tagline: string;
     vote_average: number;
@@ -33,13 +38,13 @@ export type IDropdownData = string[]
 
 export interface ICommonFormField {
     typeField?: string,
-    value: string | string[] | number | IDropdownData,
+    value: string | string[] | number | IDropdownData | ISelectOption[],
     placeholder?: string,
     label?: string,
     name?: string,
     step?: number,
     multiply?: boolean,
-    data?: IDropdownData | null
+    data?: ISelectOption[] | null
 }
 
 
@@ -72,7 +77,8 @@ export enum Direction {
 
 export enum MovieActionEnum {
     Delete = 'Delete',
-    Edit = 'Edit'
+    Edit = 'Edit',
+    New = 'New'
 }
 
 export interface IGlobalContextInterface {
@@ -102,3 +108,4 @@ export interface IErrorResponse {
         message?: any
     }
 }
+

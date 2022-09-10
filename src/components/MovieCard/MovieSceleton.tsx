@@ -7,14 +7,14 @@ export interface IMoveSceletonProps {
 
 export default function MoveSceleton(props: IMoveSceletonProps) {
 
-    const movieAmount = +useAppSelector(state => state.movie.movieParamsQuery.limit)
+    const movieAmount = useAppSelector(state => state.movie.movieParamsQuery.limit)
 
     return (
         <>
             {
                 [...Array(movieAmount).keys()].map(number => {
                     return (
-                        <article className="movie-card movie-card-skeleton" key={number}>
+                        <article className="movie-card movie-card-skeleton" key={number.toString()}>
                             <div className="image-wrapper">
                             </div>
                             <footer className="movie-card__footer">

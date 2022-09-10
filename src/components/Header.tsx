@@ -3,7 +3,7 @@ import MovieCardDescription from "./MovieCard/MovieCardDescription"
 import { useAppSelector, useAppDispatch } from './hooks/app';
 import img from '../images/header.png'
 import { toggleMovieFormModal } from "../store/slices/modalsSlices";
-import { selectMovie } from "../store/slices/movieSlices";
+import { createMovie, selectMovie } from "../store/slices/movieSlices";
 
 interface Props {
 }
@@ -11,6 +11,11 @@ interface Props {
 export const Header: React.FC<Props> = () => {
     const selectedMovie = useAppSelector((state) => state.movie.selectedMovie)
     const dispatch = useAppDispatch()
+
+    const openCreateFormMovie = () => {
+        dispatch(createMovie())
+        dispatch(toggleMovieFormModal(true))
+    }
 
     return (
         <header className={['header', selectedMovie ? 'bg-black' : ''].join(' ')}>
@@ -21,7 +26,7 @@ export const Header: React.FC<Props> = () => {
                         <a href="/" className="header__logo">
                             <h1 className="logo-text"><strong>netflix</strong>roulette</h1>
                         </a>
-                        <button type="button" className="button header__add-btn" onClick={() => dispatch(toggleMovieFormModal(true))}>+ Add movie</button>
+                        <button type="button" className="button header__add-btn" onClick={openCreateFormMovie}>+ Add movie</button>
                     </div>
 
                     <form className="header__search">

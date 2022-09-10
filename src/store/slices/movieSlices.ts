@@ -1,11 +1,46 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAddMovieForm, IDropdownData, IMovie, MovieActionEnum, IUpdateFormField, IObjectKey } from '../../types';
+import { IAddMovieForm, IDropdownData, IMovie, MovieActionEnum, IUpdateFormField, IObjectKey, ISelectOption } from '../../types';
 import { fullfildForm } from '../../utils/fullfildForm';
+
+const genre: ISelectOption[] = [
+    {
+        label: "All",
+        value: "all"
+    },
+    {
+        label: "Documentary",
+        value: "documentary"
+    },
+    {
+        label: "Comedy",
+        value: "comedy"
+    },
+    {
+        label: "Horror",
+        value: "horror"
+    },
+    {
+        label: "Drama",
+        value: "drama"
+    },
+    {
+        label: "Romance",
+        value: "romance"
+    },
+    {
+        label: "Adventure",
+        value: "adventure"
+    },
+    {
+        label: 'Animation',
+        value: 'animation'
+    }
+    ]
 
 export const initialFormValue: IAddMovieForm = {
     title: {
         label: 'Title',
-        name: 'name',
+        name: 'title',
         value: ''
     },
     tagline: {
@@ -16,26 +51,26 @@ export const initialFormValue: IAddMovieForm = {
     vote_average: {
         label: 'RATING',
         typeField: 'number',
-        name: 'rating',
+        name: 'vote_average',
         step: 0.1,
         value: ''
     },
     vote_count: {
         label: 'Amount of vote',
         typeField: 'number',
-        name: 'vote',
+        name: 'vote_count',
         value: ''
     },
     release_date: {
         label: 'RELEASE DATE',
         typeField: 'date',
-        name: 'year',
+        name: 'release_date',
         value: "2017-12-29"
     },
     poster_path: {
         label: 'movie url',
         placeholder: 'https://',
-        name: 'posterPath',
+        name: 'poster_path',
         value: ''
     },
     budget: {
@@ -59,10 +94,10 @@ export const initialFormValue: IAddMovieForm = {
     genres: {
         label: 'genre',
         typeField: 'dropdown',
-        data: ['all', 'Documentary', 'Comedy', 'Horror','crime'],
+        data: genre,
         multiply: true,
-        name: 'genre',
-        value: ['all'],
+        name: 'genres',
+        value: '',
     },
     overview: {
         label: 'OVERVIEW',
@@ -82,12 +117,12 @@ interface IMovieSlice {
     formValidation: boolean,
     selectedMovie: null | IMovie,
     movieActions: {
-        data: IDropdownData,
-        value: IDropdownData
+        data: ISelectOption[],
+        value: ISelectOption[] | null
     },
     sortedArray: {
-        data: IDropdownData,
-        value: IDropdownData
+        data: ISelectOption[],
+        value: ISelectOption[] | null
     },
     movieParamsQuery: IObjectKey
 }
@@ -98,10 +133,10 @@ const initialState: IMovieSlice = {
     formValidation: false,
     selectedMovie: null,
     movieActions: {
-        data: [MovieActionEnum.Delete, MovieActionEnum.Edit],
-        value: ['']
+        data: [{label: MovieActionEnum.Delete, value: MovieActionEnum.Delete}, {label: MovieActionEnum.Edit, value: MovieActionEnum.Edit}],
+        value: null
     },
-    sortedArray: {data: ['release_date', 'vote_average'], value: ['']},
+    sortedArray: {data: [{label: 'release date', value: 'release_date'}, {label: 'vote average', value: 'vote_average'}], value: null},
     movieParamsQuery: {'limit': '6'}
 }
 
@@ -114,10 +149,12 @@ export const movieSlice = createSlice({
         },
         updateFormField: (state, action: PayloadAction<IUpdateFormField>) => {
             state.formFields[action.payload.name].value = action.payload.value
-            console.log(action.payload.value, action.payload.name, state.formFields[action.payload.name].value)
         },
         editMovie: (state, action: PayloadAction<IMovie>) => {
             state.formFields = fullfildForm(action.payload)
+        },
+        createMovie: (state) => {
+            state.formFields = initialFormValue
         },
         selectGenre: (state, action: PayloadAction<IDropdownData>) => {
             state.genres.value = action.payload
@@ -125,11 +162,11 @@ export const movieSlice = createSlice({
         resetFormFeilds: (state) => {
             state.formFields = initialFormValue
         },
-        selectSortValue: (state, action: PayloadAction<IDropdownData>) => {
-            state.sortedArray.value = action.payload
+        selectSortValue: (state, action: PayloadAction<ISelectOption>) => {
+            state.sortedArray.value = [{...action.payload}]
         },
-        selectMovieActionsValue: (state, action: PayloadAction<IDropdownData>) => {
-            state.movieActions.value = action.payload
+        selectMovieActionsValue: (state, action: PayloadAction<MovieActionEnum>) => {
+            state.movieActions.value = [{label: action.payload, value: action.payload}]
         },
         selectMovieParamsQuery: (state, action: PayloadAction<IObjectKey>) => {
             state.movieParamsQuery[action.payload.param] = action.payload.value
@@ -137,6 +174,6 @@ export const movieSlice = createSlice({
     },
 })
 
-export const { selectMovie, updateFormField, selectGenre, editMovie, resetFormFeilds, selectSortValue, selectMovieActionsValue, selectMovieParamsQuery } = movieSlice.actions
+export const { selectMovie, updateFormField, selectGenre, editMovie, createMovie, resetFormFeilds, selectSortValue, selectMovieActionsValue, selectMovieParamsQuery } = movieSlice.actions
 
 export default movieSlice.reducer

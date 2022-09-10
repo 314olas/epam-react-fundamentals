@@ -27,8 +27,8 @@ export const movieApi = createApi({
             }),
             invalidatesTags: ['Movies']
         }),
-        createMovie: builder.mutation<void, Omit<IMovie, 'id'>>({
-            query: (movie: Omit<IMovie, 'id'>) => ({
+        createMovie: builder.mutation<IMovie, Omit<IMovie, 'id'>>({
+            query: (movie: IMovie) => ({
                 url: 'movies',
                 method: 'POST',
                 body: movie

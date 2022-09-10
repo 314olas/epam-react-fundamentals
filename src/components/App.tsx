@@ -3,11 +3,13 @@ import { Categories } from "./CategorIes"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { Footer } from "./Footer"
 import { Header } from "./Header"
+import { UseModal } from "./hooks/app"
 import { MovieCards } from "./MovieCard/MovieCards"
 import { Sort } from "./Sort"
 
 export const App = () => {
 
+    UseModal()
 
     return (
         <React.StrictMode>

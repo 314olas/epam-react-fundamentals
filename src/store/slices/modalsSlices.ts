@@ -4,12 +4,14 @@ interface IinitialState {
     deleteConfirmationModal: boolean,
     successModal: boolean,
     movieFormModal: boolean,
+    isOneModalOpen: boolean
 }
 
 const initialState: IinitialState = {
     deleteConfirmationModal: false,
     successModal: false,
-    movieFormModal: false
+    movieFormModal: false,
+    isOneModalOpen: false
 }
 
 export const modalsSlise = createSlice({
@@ -18,12 +20,15 @@ export const modalsSlise = createSlice({
     reducers: {
         toggleDeleteConfirmationModal: (state, action: PayloadAction<boolean>) => {
             state.deleteConfirmationModal = action.payload
+            state.isOneModalOpen = action.payload
         },
         toggleSuccessModal: (state, action: PayloadAction<boolean>) => {
             state.successModal = action.payload
+            state.isOneModalOpen = action.payload
         },
         toggleMovieFormModal: (state, action: PayloadAction<boolean>) => {
             state.movieFormModal = action.payload
+            state.isOneModalOpen = action.payload
         }
     }
 
