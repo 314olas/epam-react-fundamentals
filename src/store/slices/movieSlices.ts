@@ -122,9 +122,10 @@ interface IMovieSlice {
     },
     sortedArray: {
         data: ISelectOption[],
-        value: ISelectOption[] | null
+        value: ISelectOption | null
     },
-    movieParamsQuery: IObjectKey
+    movieParamsQuery: IObjectKey,
+    savedQueryParams: IObjectKey
 }
 
 const initialState: IMovieSlice = {
@@ -137,7 +138,8 @@ const initialState: IMovieSlice = {
         value: null
     },
     sortedArray: {data: [{label: 'release date', value: 'release_date'}, {label: 'vote average', value: 'vote_average'}], value: null},
-    movieParamsQuery: {'limit': '6'}
+    movieParamsQuery: {'limit': '6', sortOrder: 'desc'},
+    savedQueryParams: {}
 }
 
 export const movieSlice = createSlice({
@@ -156,24 +158,21 @@ export const movieSlice = createSlice({
         createMovie: (state) => {
             state.formFields = initialFormValue
         },
-        selectGenre: (state, action: PayloadAction<IDropdownData>) => {
-            state.genres.value = action.payload
+        selectGenre: (state, action: PayloadAction<string>) => {
+            state.genres.value = [action.payload]
         },
         resetFormFeilds: (state) => {
             state.formFields = initialFormValue
         },
-        selectSortValue: (state, action: PayloadAction<ISelectOption>) => {
-            state.sortedArray.value = [{...action.payload}]
-        },
         selectMovieActionsValue: (state, action: PayloadAction<MovieActionEnum>) => {
             state.movieActions.value = [{label: action.payload, value: action.payload}]
         },
-        selectMovieParamsQuery: (state, action: PayloadAction<IObjectKey>) => {
-            state.movieParamsQuery[action.payload.param] = action.payload.value
+        seveQueryParams: (state, action: PayloadAction<IObjectKey>) => {
+            state.savedQueryParams = action.payload
         }
     },
 })
 
-export const { selectMovie, updateFormField, selectGenre, editMovie, createMovie, resetFormFeilds, selectSortValue, selectMovieActionsValue, selectMovieParamsQuery } = movieSlice.actions
+export const { selectMovie, updateFormField, selectGenre, editMovie, createMovie, resetFormFeilds, selectMovieActionsValue, seveQueryParams } = movieSlice.actions
 
 export default movieSlice.reducer

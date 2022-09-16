@@ -50,12 +50,21 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
     "react-select": "^5.4.0",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1"
   },
-  "browserslist": [
-    "last 2 versions",
-    "ie 11"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

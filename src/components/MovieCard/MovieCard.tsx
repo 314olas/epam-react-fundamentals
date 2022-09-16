@@ -1,8 +1,9 @@
 import React from "react"
-import DropDown from "../Dropdown"
-import { IMovie, ISelectOption, IToggleAction, MovieActionEnum } from "../../types"
-import MovieCardImg from "./MovieCardImg"
 import { components, StylesConfig } from "react-select"
+import { useSearchParams } from "react-router-dom"
+import DropDown from "../Dropdown"
+import MovieCardImg from "./MovieCardImg"
+import { IMovie, ISelectOption, IToggleAction, MovieActionEnum } from "../../types"
 
 interface Props {
     movies: IMovie[],
@@ -11,11 +12,13 @@ interface Props {
     actions: ISelectOption[]
 }
 
-export const MovieCard: React.FC<Props> = ({movies, actions, toggleMovieAction, selectMovieHandler}) =>  {
+export const MovieCard: React.FC<Props> = ({movies, actions, toggleMovieAction}) =>  {
+    const [search, setSearch] = useSearchParams()
 
     const clickHandler = (e: React.MouseEvent<HTMLAnchorElement>, movie: IMovie) => {
         e.preventDefault();
-        selectMovieHandler(movie)
+        search.set('movie', String(movie.id))
+        setSearch(search)
     }
 
     const dropdownStyles: StylesConfig<ISelectOption, true> = {
@@ -64,7 +67,6 @@ export const MovieCard: React.FC<Props> = ({movies, actions, toggleMovieAction, 
                                 customComponents={{DropdownIndicator: DropdownIndicator}}
                                 onChangeHandler={(value: ISelectOption) => toggleMovieAction({value: value.value as MovieActionEnum, id: movie.id}, movie)}
                             />
-
                         </div>
                         <footer className="movie-card__footer">
                             <div className="text-content">

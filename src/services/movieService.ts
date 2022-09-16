@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IErrorResponse, IMovie, MoviesResponse } from '../types';
+import { IErrorResponse, IMovie, MoviesResponse, IObjectKey } from '../types';
 
 export const movieApi = createApi({
     reducerPath: 'movieApi',
@@ -9,11 +9,17 @@ export const movieApi = createApi({
     tagTypes: ['Movies'],
     endpoints: (builder) => ({
         getMovies: builder.query<IMovie[], object>({
-            query: (arg?: object) => ({
-                url: 'movies',
-                method: 'GET',
-                params: arg
-            }),
+            query: (arg?: IObjectKey) => {
+                const params = {...arg}
+                if (params && params.hasOwnProperty('movie')) {
+                    delete params['movie']
+                }
+                return {
+                    url: 'movies',
+                    method: 'GET',
+                    params: params
+                }
+            },
             transformResponse: (response: MoviesResponse) => response.data,
             providesTags: result => ['Movies']
         }),

@@ -1,33 +1,41 @@
 import React from "react"
-import { Categories } from "./CategorIes"
-import { ErrorBoundary } from "./ErrorBoundary"
-import { Footer } from "./Footer"
-import { Header } from "./Header"
+import { RouteObject, useRoutes, Navigate } from 'react-router-dom';
 import { UseModal } from "./hooks/app"
-import { MovieCards } from "./MovieCard/MovieCards"
-import { Sort } from "./Sort"
+import Main from "../components/layout/Main";
+import Search from "../pages/Search";
+import Error from "../pages/Error";
+import Movie from "../pages/Movie";
 
 export const App = () => {
-
     UseModal()
 
-    return (
-        <React.StrictMode>
-            <Header />
-            <main className="content">
-                <div className="filter">
-                    <Categories />
-                    <Sort />
-                </div>
-                <ErrorBoundary>
-                    <MovieCards />
-                </ErrorBoundary>
-            </main>
-            <Footer>
-                <a href="/" className="header__logo">
-                    <h1 className="logo-text"><strong>netflix</strong>roulette</h1>
-                </a>
-            </Footer>
-        </React.StrictMode>
-    )
+    const routes: RouteObject[] = [
+        {
+            path: "/",
+            element: <Navigate to='/search' />
+        },
+        {
+            path: "search",
+            children: [
+                {
+                    index: true,
+                    element: <Search />,
+                }
+            ]
+        },
+        {
+            path: "/movie",
+            element: <Movie />
+        },
+        {
+            path: "*",
+            element: <Error />
+        }
+    ]
+
+    return <Main>
+        {useRoutes(routes)}
+    </Main>
+
+
 }

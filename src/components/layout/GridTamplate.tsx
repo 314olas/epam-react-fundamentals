@@ -1,7 +1,6 @@
 import React from "react"
 import "../../styles/components/grid-tamplate.scss"
 
-
 interface Props {
     children: React.ReactNode,
     columnCount?: number,

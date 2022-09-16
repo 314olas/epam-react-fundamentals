@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { FieldProps, useField } from 'formik';
 import Select, { StylesConfig } from 'react-select'
 import { ISelectOption } from '../../types';

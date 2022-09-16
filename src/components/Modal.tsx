@@ -1,6 +1,7 @@
-import React, { useState } from "react"
-import "../styles/components/modal.scss"
+import React from "react"
 import { Direction } from "../types"
+
+import "../styles/components/modal.scss"
 
 interface Props {
     additionalClass?: string,

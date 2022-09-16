@@ -1,8 +1,7 @@
 import React from "react";
+import Select, { StylesConfig } from "react-select";
 import { ISelectOption } from "../types";
 import "../styles/components/dropdown.scss"
-import Select, { StylesConfig, components } from "react-select";
-
 
 interface Props {
     items: ISelectOption[],
@@ -10,7 +9,7 @@ interface Props {
     onChangeHandler: (value: ISelectOption | ISelectOption[]) => void,
     name?: string,
     multiply?: boolean,
-    value: ISelectOption[] | null
+    value: ISelectOption[] | ISelectOption | null
     styles?: StylesConfig<ISelectOption, true>,
     placeholder?: string,
     customComponents?: any
@@ -18,7 +17,15 @@ interface Props {
 
 const DropDown: React.FC<Props> = (
     {
-        items, onChangeHandler, className, placeholder = '', name, multiply, value = [''], styles, customComponents
+        items, 
+        onChangeHandler, 
+        className, 
+        placeholder = '', 
+        name, 
+        multiply = false, 
+        value = [''], 
+        styles, 
+        customComponents
     }) => {
 
     let defaultStylestyles: StylesConfig<ISelectOption, true> = {
@@ -91,10 +98,6 @@ const DropDown: React.FC<Props> = (
             components={customComponents}
         />
     </div>
-}
-
-DropDown.defaultProps = {
-    multiply: false,
 }
 
 export default DropDown

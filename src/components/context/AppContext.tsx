@@ -1,5 +1,4 @@
 import React, { createContext } from "react";
-import { IGlobalContextInterface } from "../../types";
 
 export const AppContext = createContext({
     
